@@ -13,12 +13,17 @@ import com.hmonitorws.hmonitorws.Ws.Models.DataPatientEval;
 import com.hmonitorws.hmonitorws.Ws.Models.DevicesResponse;
 import com.hmonitorws.hmonitorws.Ws.Models.HistoriaResp;
 import com.hmonitorws.hmonitorws.Ws.Models.PatientsResponse;
+import com.hmonitorws.hmonitorws.Ws.Models.RespEncuesta;
+import com.hmonitorws.hmonitorws.Ws.Models.ResponseNewPatient;
 import com.hmonitorws.hmonitorws.Ws.Models.ResumenReponse;
 import com.hmonitorws.hmonitorws.Ws.Models.SVLastdataResponse;
 import com.hmonitorws.hmonitorws.Ws.Models.Statusconnect;
 import com.hmonitorws.hmonitorws.Ws.Models.UserDeviceResumen;
 import com.hmonitorws.hmonitorws.Ws.Models.UserPatientsResumenReponse;
+import com.hmonitorws.hmonitorws.Ws.Models.VerifyEnc;
 import com.hmonitorws.hmonitorws.Ws.Models.VitalSignsResponse;
+import com.hmonitorws.hmonitorws.Ws.Models.responseCondicion;
+import com.hmonitorws.hmonitorws.Ws.Models.tCondicion;
 import com.hmonitorws.hmonitorws.Ws.Services.ProcessServices;
 
 @RestController
@@ -43,8 +48,8 @@ public class ProcessController {
     }
 
     @RequestMapping(value = "wListarDispositivos", method = RequestMethod.GET)
-    public List<DevicesResponse> getDevices(@RequestParam String us){
-        return processServices.getDevicesResponses(us);
+    public List<DevicesResponse> getDevices(@RequestParam String us, @RequestParam Integer tUs){
+        return processServices.getDevicesResponses(us, tUs);
     } 
 
     @RequestMapping(value = "wListarRegistrosPac", method = RequestMethod.GET)
@@ -94,5 +99,32 @@ public class ProcessController {
     @RequestMapping(value="wEstadoConexion", method = RequestMethod.GET)
     public Statusconnect getStatusconnect(@RequestParam String pc){
         return processServices.getStatusconnect(pc);
+    }
+
+    @RequestMapping(value = "wRespuestasEncuesta", method = RequestMethod.GET)
+    public List<RespEncuesta> getRespuestas(@RequestParam String pc){
+        return processServices.getRespuesta(pc);
+    }
+
+    @RequestMapping(value = "wNuevoPaciente", method = RequestMethod.POST)
+    public ResponseNewPatient resInsertPatient(@RequestParam String cr, @RequestParam String nm, @RequestParam String ap, 
+    @RequestParam String id,  @RequestParam String ml, @RequestParam String gn, 
+    @RequestParam String fn, @RequestParam String cn, @RequestParam String tc){           
+        return processServices.resInsertPatient(cr, nm, ap, id, ml, gn, fn, cn, tc);
+    }
+
+    @RequestMapping(value = "wVerificaEncuesta", method = RequestMethod.GET)
+    public VerifyEnc getVerificador(@RequestParam String pc){
+        return processServices.getVerificador(pc);
+    }
+
+    @RequestMapping(value = "wTConditions", method = RequestMethod.GET)
+    public List<tCondicion> getTCondicion(){
+        return processServices.getTCondicion();
+    }
+
+    @RequestMapping(value = "wCondiciones", method = RequestMethod.GET)
+    public List<responseCondicion> gResponseCondicions(String tc){
+        return processServices.getCondiciones(tc);
     }
 }

@@ -6,18 +6,24 @@ import com.hmonitorws.hmonitorws.Ws.Models.DataPatientEval;
 import com.hmonitorws.hmonitorws.Ws.Models.DevicesResponse;
 import com.hmonitorws.hmonitorws.Ws.Models.HistoriaResp;
 import com.hmonitorws.hmonitorws.Ws.Models.PatientsResponse;
+import com.hmonitorws.hmonitorws.Ws.Models.RespEncuesta;
+import com.hmonitorws.hmonitorws.Ws.Models.ResponseNewPatient;
 import com.hmonitorws.hmonitorws.Ws.Models.ResumenReponse;
 import com.hmonitorws.hmonitorws.Ws.Models.SVLastdataResponse;
 import com.hmonitorws.hmonitorws.Ws.Models.Statusconnect;
 import com.hmonitorws.hmonitorws.Ws.Models.UserDeviceResumen;
 import com.hmonitorws.hmonitorws.Ws.Models.UserPatientsResumenReponse;
+import com.hmonitorws.hmonitorws.Ws.Models.VerifyEnc;
 import com.hmonitorws.hmonitorws.Ws.Models.VitalSignsResponse;
+import com.hmonitorws.hmonitorws.Ws.Models.responseCondicion;
+import com.hmonitorws.hmonitorws.Ws.Models.tCondicion;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -28,8 +34,8 @@ public interface ProcessRepository extends JpaRepository<RootEntity, Integer>{
     @Query(value = "select * from fn_listapacientesmedico(:us)", nativeQuery = true)
     List<DataPatientEval> getPatientsMedic(@Param("us") String us);
 
-    @Query(value = "select * from fnDispositivosAsistente(:us)", nativeQuery = true)    
-    List<DevicesResponse> getDevices(@Param("us") String Us);
+    @Query(value = "select * from fnDispositivosAsistente(:us, :tus)", nativeQuery = true)    
+    List<DevicesResponse> getDevices(@Param("us") String Us, @Param("tus") Integer tUs);
 
     @Query(value = "select * from fnSignosVitalesPaciente (:us, :pc)", nativeQuery= true)
     List<VitalSignsResponse> getDataSignsPatient(@Param("us") String Us, @Param("pc") String Pc);
@@ -57,6 +63,23 @@ public interface ProcessRepository extends JpaRepository<RootEntity, Integer>{
     @Param("r13") String r13, @Param("r14") String r15, @Param("pc") String pc,
     @Param("us") String us);
 
-    @Query(value="select * from fnconecciondispositivo(:pc)", nativeQuery = true)
+    @Query(value="select * from fnconexiondispositivo(:pc)", nativeQuery = true)
     Statusconnect getStatusconnect(@Param("pc") String pc);
+
+    @Query(value="select * from fnrespuestasencuesta(:pc)", nativeQuery = true)
+    List<RespEncuesta> getRespuestas(@Param("pc") String pc);
+
+    @Query(value = "select * from fnregistropaciente(:cr, :nm, :ap, :id, :ml, :gn, :fn, :cn, :tc)", nativeQuery = true)
+    ResponseNewPatient resInsertPatient(@Param("cr") String cr, @Param("nm") String nm, @Param("ap") String ap, 
+    @Param("id") String id, @Param("ml") String ml, @Param("gn") String gn, 
+    @Param("fn") String fn, @Param("cn") String cn, @Param("tc") String tc);
+
+    @Query(value = "select * from fnverificaencuesta(:pc)", nativeQuery = true)
+        VerifyEnc getVerificador(@Param("pc") String pc);
+
+    @Query(value = "select * from fn_select_tipo_condicion_paciente()", nativeQuery = true)
+    List<tCondicion> getTCondicion();
+
+    @Query(value = "select * from fncondicionfortype(:tc)", nativeQuery = true)
+    List<responseCondicion> getCondicion(@Param("tc") String tc);
 }

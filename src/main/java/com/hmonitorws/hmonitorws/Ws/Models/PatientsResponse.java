@@ -6,4 +6,5 @@ public interface PatientsResponse {
     String getcondicio();
     String getfecac();
     String getdet();
+    String geteval();
 }

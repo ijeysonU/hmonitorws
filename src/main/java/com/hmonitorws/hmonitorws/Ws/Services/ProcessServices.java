@@ -7,14 +7,20 @@ import com.hmonitorws.hmonitorws.Ws.Models.DataPatientEval;
 import com.hmonitorws.hmonitorws.Ws.Models.DevicesResponse;
 import com.hmonitorws.hmonitorws.Ws.Models.HistoriaResp;
 import com.hmonitorws.hmonitorws.Ws.Models.PatientsResponse;
+import com.hmonitorws.hmonitorws.Ws.Models.RespEncuesta;
+import com.hmonitorws.hmonitorws.Ws.Models.ResponseNewPatient;
 import com.hmonitorws.hmonitorws.Ws.Models.ResumenReponse;
 import com.hmonitorws.hmonitorws.Ws.Models.SVLastdataResponse;
 import com.hmonitorws.hmonitorws.Ws.Models.Statusconnect;
 import com.hmonitorws.hmonitorws.Ws.Models.UserDeviceResumen;
 import com.hmonitorws.hmonitorws.Ws.Models.UserPatientsResumenReponse;
+import com.hmonitorws.hmonitorws.Ws.Models.VerifyEnc;
 import com.hmonitorws.hmonitorws.Ws.Models.VitalSignsResponse;
+import com.hmonitorws.hmonitorws.Ws.Models.responseCondicion;
+import com.hmonitorws.hmonitorws.Ws.Models.tCondicion;
 import com.hmonitorws.hmonitorws.Ws.Repository.ProcessRepository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -33,8 +39,8 @@ public class ProcessServices {
         return processRepository.getPatientsMedic(us);
     }
 
-    public List<DevicesResponse> getDevicesResponses(String us){
-        return processRepository.getDevices(us);
+    public List<DevicesResponse> getDevicesResponses(String us, Integer tUs){
+        return processRepository.getDevices(us, tUs);
     }
 
     public List<VitalSignsResponse> getVitalSignsResponses(String us, String pc){
@@ -70,4 +76,26 @@ public class ProcessServices {
      public Statusconnect getStatusconnect(String pc){
         return processRepository.getStatusconnect(pc);
     }
+
+    public List<RespEncuesta> getRespuesta(String pc){
+        return processRepository.getRespuestas(pc);
+    }
+
+    public ResponseNewPatient resInsertPatient( String cr,  String nm,  String ap, 
+     String id,  String ml,  String gn, 
+     String fn,  String cn,  String tc){
+        return processRepository.resInsertPatient(cr, nm, ap, id, ml, gn, fn, cn, tc);
+     }
+
+     public VerifyEnc getVerificador(String pc){
+        return processRepository.getVerificador(pc);
+     }
+
+     public List<tCondicion> getTCondicion(){
+        return processRepository.getTCondicion();
+     }
+
+     public List<responseCondicion> getCondiciones(String tc){
+        return processRepository.getCondicion(tc);
+     }
 }

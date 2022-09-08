@@ -7,7 +7,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.hmonitorws.hmonitorws.Ws.Models.LoginResponse;
 import com.hmonitorws.hmonitorws.Ws.Models.RegUserResponse;
+import com.hmonitorws.hmonitorws.Ws.Models.UserDataProfile;
 import com.hmonitorws.hmonitorws.Ws.Models.UserDataResponse;
+import com.hmonitorws.hmonitorws.Ws.Models.VerifyEnc;
+import com.hmonitorws.hmonitorws.Ws.Models.tCondicion;
 
 @Repository
 public interface UserRepository extends JpaRepository<RootEntity, Integer> {
@@ -25,4 +28,11 @@ public interface UserRepository extends JpaRepository<RootEntity, Integer> {
 
     @Query(value = "select * from fnDatauser(:Mail)", nativeQuery = true)
     UserDataResponse DataUser(@Param("Mail") String Mail);
+
+    @Query(value = "select * from fnuserdataprofile(:mail, :tusr)", nativeQuery = true)
+    UserDataProfile getDataProf(@Param("mail") String mail, @Param("tusr") Integer tusr);
+
+    
+    
+    
 }

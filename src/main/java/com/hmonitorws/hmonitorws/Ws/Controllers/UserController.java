@@ -2,21 +2,16 @@ package com.hmonitorws.hmonitorws.Ws.Controllers;
 
 
 
-import java.io.Console;
-
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hmonitorws.hmonitorws.Ws.Models.LoginResponse;
+import com.hmonitorws.hmonitorws.Ws.Models.UserDataProfile;
 import com.hmonitorws.hmonitorws.Ws.Models.UserDataResponse;
 import com.hmonitorws.hmonitorws.Ws.Security.Encriptar;
 import com.hmonitorws.hmonitorws.Ws.Services.MailServices;
@@ -63,7 +58,11 @@ public class UserController {
 
     @RequestMapping(value = "wDataUser", method = RequestMethod.GET)
     public UserDataResponse wDataUser(@RequestParam String Mail){
-        return userServices.DataUser(Mail);
-        
+        return userServices.DataUser(Mail);        
+    }
+
+    @RequestMapping(value = "wDataProfile", method = RequestMethod.GET)
+    public UserDataProfile getDataProf(@RequestParam String mail, @RequestParam Integer tusr){
+        return userServices.getDataProf(mail, tusr);
     }
 }
